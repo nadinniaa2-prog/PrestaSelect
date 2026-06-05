@@ -34,37 +34,35 @@ export default function LoginPage({ onLoginSuccess, onNavigate }: LoginPageProps
 
     const trimmedEmail = email.trim().toLowerCase();
 
-    // Fast-path local demo credential bypass to eliminate any network/Supabase lag (ONLY when Supabase is offline/inactive)
-    if (!isUsingSupabase) {
-      if (trimmedEmail === 'admin@example.com' && password === 'admin123') {
-        setTimeout(() => {
-          const adminSession: UserSession = {
-            email: 'admin@example.com',
-            role: 'admin',
-            name: 'Administrator (Sistem)'
-          };
-          localStorage.setItem('presta_session', JSON.stringify(adminSession));
-          onLoginSuccess(adminSession);
-          onNavigate('/app');
-          setLoading(false);
-        }, 150);
-        return;
-      }
+    // Fast-path local demo credential bypass to eliminate any network/Supabase lag (ALWAY enabled for demo convenience)
+    if (trimmedEmail === 'admin@example.com' && password === 'admin123') {
+      setTimeout(() => {
+        const adminSession: UserSession = {
+          email: 'admin@example.com',
+          role: 'admin',
+          name: 'Administrator (Sistem)'
+        };
+        localStorage.setItem('presta_session', JSON.stringify(adminSession));
+        onLoginSuccess(adminSession);
+        onNavigate('/app');
+        setLoading(false);
+      }, 150);
+      return;
+    }
 
-      if (trimmedEmail === 'guru@example.com' && password === 'guru123') {
-        setTimeout(() => {
-          const guruSession: UserSession = {
-            email: 'guru@example.com',
-            role: 'guru',
-            name: 'Dewan Guru / Penilai'
-          };
-          localStorage.setItem('presta_session', JSON.stringify(guruSession));
-          onLoginSuccess(guruSession);
-          onNavigate('/app');
-          setLoading(false);
-        }, 150);
-        return;
-      }
+    if (trimmedEmail === 'guru@example.com' && password === 'guru123') {
+      setTimeout(() => {
+        const guruSession: UserSession = {
+          email: 'guru@example.com',
+          role: 'guru',
+          name: 'Dewan Guru / Penilai'
+        };
+        localStorage.setItem('presta_session', JSON.stringify(guruSession));
+        onLoginSuccess(guruSession);
+        onNavigate('/app');
+        setLoading(false);
+      }, 150);
+      return;
     }
 
     if (isUsingSupabase && supabase) {
@@ -254,6 +252,8 @@ export default function LoginPage({ onLoginSuccess, onNavigate }: LoginPageProps
                   )}
                 </button>
               </form>
+
+
 
 
             </motion.div>
