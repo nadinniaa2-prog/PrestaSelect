@@ -22,7 +22,7 @@ export default function LoginPage({ onLoginSuccess, onNavigate }: LoginPageProps
 
   // Quick Account Auto-fill helpers to improve AI Studio feedback
   const handleAutoFill = () => {
-    setEmail('admin@example.com');
+    setEmail('admin@gmail.com');
     setPassword('admin123');
     setError(null);
   };
@@ -35,10 +35,13 @@ export default function LoginPage({ onLoginSuccess, onNavigate }: LoginPageProps
     const trimmedEmail = email.trim().toLowerCase();
 
     // Fast-path local demo credential bypass to eliminate any network/Supabase lag (ALWAY enabled for demo convenience)
-    if (trimmedEmail === 'admin@example.com' && password === 'admin123') {
+    if (
+      (trimmedEmail === 'admin@example.com' || trimmedEmail === 'admin@gmail.com') && 
+      password === 'admin123'
+    ) {
       setTimeout(() => {
         const adminSession: UserSession = {
-          email: 'admin@example.com',
+          email: trimmedEmail,
           role: 'admin',
           name: 'Administrator (Sistem)'
         };
@@ -50,10 +53,13 @@ export default function LoginPage({ onLoginSuccess, onNavigate }: LoginPageProps
       return;
     }
 
-    if (trimmedEmail === 'guru@example.com' && password === 'guru123') {
+    if (
+      (trimmedEmail === 'guru@example.com' && password === 'guru123') ||
+      (trimmedEmail === 'guru@gmail.com' && password === 'gururpl')
+    ) {
       setTimeout(() => {
         const guruSession: UserSession = {
-          email: 'guru@example.com',
+          email: trimmedEmail,
           role: 'guru',
           name: 'Dewan Guru / Penilai'
         };
